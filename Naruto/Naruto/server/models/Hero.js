@@ -1,7 +1,7 @@
 import { isObjectIdOrHexString, Schema } from "mongoose";
 const ObjectId = Schema.Types.ObjectId;
 
-export const HeroeSchema = new Schema(
+export const HeroSchema = new Schema(
   {
     name: { type: String, required: true },
     village: { type: String, required: true },

@@ -2,8 +2,11 @@ import { dbContext } from "../db/DbContext";
 import { BadRequest, Forbidden } from "@bcwdev/auth0provider/lib/Errors";
 
 class HeroesService {
-  async getHero() {
-    const heroes = await dbContext.Heroes.find();
+  async getHero(query = {}) {
+    const heroes = await dbContext.Heroes.find(query);
+    if (!heroes) {
+      throw new BadRequest("Where is the heroes");
+    }
     return heroes;
   }
   async getHeroById(heroId) {

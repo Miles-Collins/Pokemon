@@ -2,7 +2,7 @@ import { api } from "./AxiosService";
 
 class HeroesService {
   async getHeroes() {
-    const heroes = await api.get("api/heroes");
+    const heroes = await api.get("/api/heroes");
     console.log("Heroes", heroes.data);
   }
 }

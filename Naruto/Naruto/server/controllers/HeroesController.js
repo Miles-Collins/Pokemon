@@ -5,12 +5,12 @@ export class HeroesController extends BaseController {
   constructor() {
     super("api/heroes");
     this.router
-      .get("", this.getHero)
+      .get("", this.getHeroes)
       .get("/:id", this.getHeroById)
       .post("", this.createHero);
   }
 
-  async getHero(req, res, next) {
+  async getHeroes(req, res, next) {
     try {
       const heroes = heroesService.getHero();
       return res.send(heroes);
