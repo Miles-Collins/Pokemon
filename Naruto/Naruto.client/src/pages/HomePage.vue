@@ -1,11 +1,19 @@
 <template>
 
+  <div class="row">
+    <div class="col-3" v-for="h in heroes" :key="h.id">
+      <HeroCard :hero="h" />
+    </div>
+  </div>
+
 </template>
 
 <script>
 import Pop from "../utils/Pop"
 import { heroesService } from "../services/HeroesService"
 import { onMounted } from "vue"
+import { computed } from "@vue/reactivity"
+import { AppState } from "../AppState"
 
 export default {
   setup() {
@@ -23,7 +31,9 @@ export default {
       }
     }
 
-    return {}
+    return {
+      heroes: computed(() => AppState.heroes)
+    }
   }
 }
 </script>

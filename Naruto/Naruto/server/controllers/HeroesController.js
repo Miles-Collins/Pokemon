@@ -7,12 +7,13 @@ export class HeroesController extends BaseController {
     this.router
       .get("", this.getHeroes)
       .get("/:id", this.getHeroById)
-      .post("", this.createHero);
+      .post("", this.createHero)
+      .put("/:id", this.editHero);
   }
 
   async getHeroes(req, res, next) {
     try {
-      const heroes = heroesService.getHero();
+      const heroes = await heroesService.getHero();
       return res.send(heroes);
     } catch (error) {
       next(error);
@@ -31,6 +32,15 @@ export class HeroesController extends BaseController {
   async getHeroById(req, res, next) {
     try {
       const hero = await heroesService.getHeroById(req.params.id);
+      return res.send(hero);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async editHero(req, res, next) {
+    try {
+      const hero = await heroesService.editHero(req.body, req.params.id);
       return res.send(hero);
     } catch (error) {
       next(error);
