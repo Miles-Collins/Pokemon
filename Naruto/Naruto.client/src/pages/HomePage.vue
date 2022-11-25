@@ -5,6 +5,13 @@
       <HeroCard :hero="h" />
     </div>
   </div>
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <Modal id="exampleModal">
+      <form action="">
+        <input type="text">
+      </form>
+    </Modal>
+  </button>
 
 </template>
 
