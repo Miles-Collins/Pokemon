@@ -4,7 +4,7 @@ export const api = Axios.create({
   baseURL,
   timeout: 8000,
 });
-export const api = Axios.create({
+export const hyrule = Axios.create({
   baseURL: "https://botw-compendium.herokuapp.com/api/v2/entry/",
   timeout: 8000,
 });

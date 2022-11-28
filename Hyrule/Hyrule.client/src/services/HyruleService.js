@@ -1,6 +1,6 @@
 class HyruleService {
   async getHyrule() {
-    let res = await api.get();
+    let res = await hyrule.get();
     console.log(res.data);
   }
 }
