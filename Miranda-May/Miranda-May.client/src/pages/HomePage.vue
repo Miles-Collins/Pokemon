@@ -1,44 +1,44 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img
-        src="https://bcw.blob.core.windows.net/public/img/8600856373152463"
-        alt="CodeWorks Logo"
-        class="rounded-circle"
-      >
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <div class="row">
+    <div v-for="a in artPieces" class="col-3 m-3">
+      <ArtCard :artPiece="a" />
     </div>
   </div>
+
 </template>
 
 <script>
+import { onMounted } from "vue"
+import Pop from "../utils/Pop"
+import { artService } from "../services/ArtService"
+import ArtCard from "../components/HomePage/ArtCard.vue"
+import { AppState } from "../AppState"
+import { computed } from "@vue/reactivity"
+
+
 export default {
   setup() {
-    return {}
-  }
+    onMounted(() => {
+      getArt();
+    });
+    async function getArt() {
+      try {
+        const art = await artService.getArt();
+      }
+      catch (error) {
+        console.error(error);
+        // @ts-ignore 
+        Pop.error(("[ERROR]"), error.message);
+      }
+    }
+    return {
+      artPieces: computed(() => AppState.artPieces)
+    };
+  },
+  components: { ArtCard }
 }
 </script>
 
-<style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
+<style>
 
-  .home-card {
-    width: 50vw;
-
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-  }
-}
 </style>

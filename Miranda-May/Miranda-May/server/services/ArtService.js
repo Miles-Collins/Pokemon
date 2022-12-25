@@ -13,6 +13,7 @@ class ArtService {
 
     oldArt.name = newArt.name || oldArt.name;
     oldArt.picture = newArt.picture || oldArt.picture;
+    oldArt.price = newArt.price || oldArt.price;
     oldArt.description = newArt.description || oldArt.description;
     await oldArt.save();
     return oldArt;
