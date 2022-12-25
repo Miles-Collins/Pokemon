@@ -1,30 +1,39 @@
 import { dbContext } from "../db/DbContext";
-import { BadRequest } from "../utils/Errors";
+import { BadRequest, Forbidden } from "../utils/Errors";
 
 class ArtService {
   async editArt(artId, newArt) {
-    const oldArt = await this.getArtById(artId);
+    let oldArt = await this.getArtById(artId);
 
-    if (oldArt.creatorId != newArt.creatorId)
-      (oldArt.name = newArt.name || oldArt.name),
-        (oldArt.picture = newArt.picture || oldArt.picture);
+    if (oldArt.creatorId != newArt.creatorId) {
+      throw new Forbidden(
+        "You do not have permission to edit this piece of Art."
+      );
+    }
+
+    oldArt.name = newArt.name || oldArt.name;
+    oldArt.picture = newArt.picture || oldArt.picture;
     oldArt.description = newArt.description || oldArt.description;
+    await oldArt.save();
+    return oldArt;
   }
-  deleteArt(id) {
+  deleteArt(artId, userId) {
     throw new Error("Method not implemented.");
   }
   async createArt(body) {
-    const art = await dbContext.Art.create(body);
+    let art = await dbContext.Art.create(body);
+    await art.populate("creator");
     return art;
   }
   async getArtById(artId) {
-    const art = await dbContext.Art.findById(artId).populate("creator");
+    let art = await dbContext.Art.findById(artId).populate("creator");
     if (!art) {
-      return new BadRequest("That piece of Art does not exist.");
-    } else return art;
+      throw new BadRequest("That piece of Art does not exist.");
+    }
+    return art;
   }
   async getArt() {
-    const art = await dbContext.Art.find().populate("creator");
+    let art = await dbContext.Art.find().populate("creator");
     return art;
   }
 }

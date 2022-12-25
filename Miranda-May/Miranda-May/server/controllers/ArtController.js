@@ -34,7 +34,9 @@ export class ArtController extends BaseController {
 
   async createArt(req, res, next) {
     try {
-      const art = await artService.createArt(req.body);
+      const artData = req.body;
+      artData.creatorId = req.userInfo.id;
+      const art = await artService.createArt(artData);
       return res.send(art);
     } catch (error) {
       next(error);
@@ -43,8 +45,9 @@ export class ArtController extends BaseController {
 
   async editArt(req, res, next) {
     try {
-      req.body.creatorId = req.userInfo.id;
-      const art = await artService.editArt(req.params.id, req.body);
+      const artData = req.body;
+      artData.creatorId = req.userInfo.id;
+      const art = await artService.editArt(req.params.id, artData);
       return res.send();
     } catch (error) {
       next(error);
